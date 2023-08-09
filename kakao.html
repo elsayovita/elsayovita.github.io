@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Kakao Webtoon Trend | Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">HOME</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">HOME</a></li>
+							<li><a href="generic.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://twitter.com/elsayovita51" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="https://sg.linkedin.com/in/elsa-yovita-070b55155" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://github.com/elsayovita" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<h1>KAKAO WEBTOON TREND</h1>
+									<p>Visualizing popular genre from Kakao Webtoon's Indonesian market using BeautifulSoup</p>
+								</header>
+								<span class="image fit"><img src="images/kakao.png" alt="" /></span>
+
+								<!-- Text stuff -->
+									<h2>Background</h2>
+									<p>Recently there are a lot of Korean webtoon series getting animated, much-welcomed news to their ardent followers. You might have heard about the recent news about the anime (animation) release announcement of Solo Leveling, which is based on a Korean webtoon series of the same title. In Indonesia, the series is published in Kakao Webtoon platform, which launched on April 1st, 2022. Exploring the app, I noticed that even with the popular action webtoon, the platform seems to be catering more towards romance enthusiasts. So I went to further use the data to verify the distribution of series by genre using the number of likes as a popularity metric.</p>
+
+									<h2>Data</h2>
+									<p>Data was retrieved from <a href="https://id.kakaowebtoon.com">Kakao webtoon homepage</a> on March 23rd 2023. The list of pages for the existing series was obtained using sitemap and data was retrieved from each series page using BeautifulSoup and transformed into a tabular format using Pandas. The part of script used to extract the data for each series can be found below. The complete script can be found on <a href="https://github.com/elsayovita/kakao">my GitHub page</a>. Data was exported into Excel file and can be found <a href="https://www.kaggle.com/datasets/elsayovita/kakao-webtoon-indonesia-dataset">here.</a></p>
+								<!-- Preformatted Code -->
+								<pre><code># Create empty list to store loop result containing list of all columns
+by_titles = []
+n = len(df["Content"]);
+</code></pre>
+								<pre><code># Iterate for all series in the list
+for i in range(n):
+	try:
+		the_url = df.loc[i, "Content"]
+		he_id = df.loc[i, "Id"]
+								
+		result = requests.get(the_url)
+								
+		oup = BeautifulSoup(result.content, 'html5lib')
+								
+		subresults = soup.find_all("p")
+		subresult_text = [subresult.text for subresult in subresults if subresult.text and subresult.text != "0"]
+								
+		by_title = {'Id': the_id,
+					'subresult_text': subresult_text[:],
+					'title': subresult_text[0],
+					'author_group': subresult_text[1],
+					'genre': subresult_text[2],
+					'views': subresult_text[3],
+					'likes': subresult_text[4],
+					desc': soup.find("meta", attrs={'name': 'description'})["content"]}
+								
+		by_titles.append(by_title)
+	except requests.exceptions.RequestException as e:
+		print(f"Error fetching URL for iteration {i}: {e}")
+		break
+	except (KeyError, IndexError) as e:
+		print(f"Error parsing data for iteration {i}: {e}")
+		break;
+	</code></pre>
+									<h2>Observation</h2>
+									<h3>Dominant Genre</h3>
+									<p>Breaking down the series by genre, the initial observation holds that the platform gears towards romance-related genres. Kakao webtoon platform broke down its Romance genre into Romance and Romance Fantasy, and <em>both combined sums up to 79% of the whole existing series on the platform.</em></p>
+									<span class="image fit"><img src="images/kakao-tableau.png" alt="" /></span>
+
+									<h3>Popular Genre</h3>
+									<p>Based on the distribution of the number of likes by series, Romance Fantasy is the most popular genre, with its distribution of likes skewed to the left. The difference between was verified using non-parametric Kruskal-Wallis test to verify if there’s any genre with significant difference in the number of likes, followed by pairwise Wilcoxon test to verify which genre is significantly different. <em>From the result, besides between Romance and Drama, the genres have significantly different popularity with each other.</em></p>
+									<span class="image fit"><img src="images/kakao-r.png" alt="" /></span>
+
+									<p>Interestingly, Romance Fantasy is significantly more popular than its Romance counterpart. Perhaps the inclusion of a Fantasy element appealed to a broader audience, as no Fantasy-only genre is available on the platform might attract Fantasy-genre enthusiasts to the series in this Romance Fantasy genre.</p>
+									<span class="image fit"><img src="images/kakao-box.png" alt="" /></span>
+
+									<p>Despite the popularity of Romance Fantasy genre, the most popular series in the platform turned out to be Solo Leveling. However, this observation seemed to be more of an exception rather than the norm, as Romance Fantasy was more popular as a whole. But then, perhaps understanding the reason behind it’s success will help towards replicating the success to other Action series.</p>
+									<span class="image fit"><img src="images/kakao-solo.png" alt="" /></span>
+
+									<h2>Links</h2>
+									<ul>
+										<li><a href="https://github.com/elsayovita/kakao/blob/main/kakao-data.ipynb">Python Script (data transformation)</a></li>
+										<li><a href="https://github.com/elsayovita/kakao/blob/main/kakao-test.R">R Script (statistical testing)</a></li>
+										<li><a href="https://www.kaggle.com/datasets/elsayovita/kakao-webtoon-indonesia-dataset">Dataset</a></li>
+										<li><a href="https://public.tableau.com/app/profile/elsa6801/viz/KakaoWebtoonTreasureTroveofRomanceFantasy/KakaoWebtoon">Tableau Dashboard</a></li>
+									</ul>
+									<ul class="actions fit">
+										<li><a href="#top" class="button primary fit">Back to Top</a></li>
+									</ul>
+
+									<hr />
+							</section>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section class="split contact">
+							<section class="alt">
+								<h3>Address</h3>
+								<p>Singapore</p>
+							</section>
+							<section>
+								<h3>Email</h3>
+								<p><a href="#">info@untitled.tld</a></p>
+							</section>
+							<section>
+								<h3>Social</h3>
+								<ul class="icons alt">
+									<li><a href="https://twitter.com/elsayovita51" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="https://sg.linkedin.com/in/elsa-yovita-070b55155" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									<li><a href="https://github.com/elsayovita" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+								</ul>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
