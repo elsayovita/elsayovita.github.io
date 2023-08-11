@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>HDB Resale Flat Demand & Price Analysis | Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">HOME</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">HOME</a></li>
+							<li><a href="generic.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://twitter.com/elsayovita51" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="https://sg.linkedin.com/in/elsa-yovita-070b55155" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://github.com/elsayovita" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<h1>HDB RESALE FLAT DEMAND & PRICE ANALYSIS</h1>
+									<p>Factors affecting the price and demand of Singapore HDB resale flat.</p>
+								</header>
+								<span class="image fit"><img src="images/HDB.png" alt="" /></span>
+
+								<!-- Text stuff -->
+									<h2>Background</h2>
+
+									<p>Singapore’s public housing market is facing a strong demand even though there is <a href="https://www.straitstimes.com/singapore/dpm-wong-confident-ramped-up-supply-cooling-measures-will-stabilise-property-market">an interruption in the supply and rising mortgage rates .</a> The supply of BTO flats is struggling to meet the rising demand for housing due to the COVID-19 pandemic, which delays the construction progress of BTO flats. This has also resulted in <a href="https://www.channelnewsasia.com/singapore/hdb-condo-rents-rising-covid-19-construction-delays-recovery-singapore-3052211">the price and rental of property hitting a record high in 2022.</a></p>
+									<p>With the increasing demand for Singapore’s resale HDB flats, homeowners and buyers would need to plan ahead when they are selling or buying a resale flat. Timing the market is important for both homeowners and buyers to ensure the resale flat is transacted at market value and at a reasonable or affordable price for the buyers. Hence, this project was done to understand the trends of the HDB resale flat market in Singapore.</p>
+
+
+									<h2>Data</h2>
+									<h3>HDB Resale Transaction Data</h3>
+									<p>Data was retrieved from <a href="https://data.gov.sg/dataset/resale-flat-prices?view_id=093ff0f0-783f-4f6a-be52-7e506a8c58ca&resource_id=f1765b54-a209-4718-8d38-a39237f502b3">Singapore public data repository</a>, containing data from January 2017 to February 2023. Data cleaning was done and both the complete script and cleaned data can be found on <a href="https://github.com/elsayovita/hdb">my GitHub page.</a></p>
+
+									<h3>Existing HDB Information</h3>
+									<p>Data was also retrieved from <a href="https://data.gov.sg/dataset/hdb-property-information">Singapore public data repository</a>, containing the unique list of existing HDB property in Singapore and the number of each type of units in the property being built since 1970. Latitude and longitude data was obtained using OneMap API based on the address column in this table, script can be found <a href="">here.</a></p>
+
+									<h3>Region</h3>
+									<p>Data was retrieved from <a href="https://va.ecitizen.gov.sg/CFP/CustomerPages/NEA_google/displayresult.aspx?MesId=1068932&Source=Google&url=va.ecitizen.gov.sg">NEA website</a>, containing the existing towns in Singapore and the region it was mapped into (North, South, West, East, Central).</p>
+									
+									<h3>Median Income</h3>
+									<p>Data was retrieved from <a href="https://va.ecitizen.gov.sg/CFP/CustomerPages/NEA_google/displayresult.aspx?MesId=1068932&Source=Google&url=va.ecitizen.gov.sg">Singstat</a> containing the number of population at different income range from all regions. Median income data was obtained based on the income range at the median population number.</p>
+									<span class="image fit"><img src="images/hdb-income.png" alt="" /></span>
+
+
+									<h2>Methodology</h2>
+									<h3>Data Merging and Visualization</h3>
+									<p>Data was imported to Tableau for data analysis and visualization. Data was merged according to the following schema, where resale transaction and existing HDB information tables were merged by address column, while income, region, and resale transaction tables were merged by town column.</p>
+									<span class="image fit"><img src="images/hdb-oltp.png" alt="" /></span>
+
+									<h3>Resale Price Prediction</h3>
+									<p>Decision tree model was used to model the resale price as we aim to understand the factors affecting resale price and the white-box nature of the model would help to achieve this goal. Model training was done in open-source Orange software.</p>
+									<span class="image fit"><img src="images/hdb-orange.png" alt="" /></span>
+
+
+									<h2>Observation</h2>
+									<h3>Increasing Resale Price</h3>
+									<p>Based on yearly trend of the resale price, observed that since 2020 the price has been on a continuous increase, and starting to plateau in the recent years. This plateau coincides with the recent cooling measures implemented by the government in the <a href="https://www.channelnewsasia.com/singapore/property-cooling-measures-absd-tdsr-ltv-loan-hdb-2382301">late 2021</a> and<a href="https://www.channelnewsasia.com/singapore/singapore-property-cooling-measures-loan-borrowing-criteria-hdb-ltv-limit-15-month-wait-out-period-2974776">2022</a> on the stricter loan criteria for hdb buyers and resellers.</p>
+									<span class="image fit"><img src="images/hdb-yearly.png" alt="" /></span>
+
+									<h3>Resale Price vs Number of Transactions</h3>
+									<p>Median resale price and number of transactions was aggregated into town level, and it was observed that generally the price was inversely proportional to the number of transactions.</p>
+									<span class="image fit"><img src="images/hdb-town.png" alt="" /></span>
+									<p>How median resale price and demand changed as the flat ages was also studied. Approximation was done to match the remaining lease years from HDB Resale Transaction and Existing HDB Information dataset, as the remaining lease from HDB Resale Transaction was based on the year of lease commencement while the one from Existing HDB Information dataset was based on the year project was completed.
+									<ol>
+										<li><b>95-91 remaining lease years:</b> Observed significantly higher transaction volume relative to subsequent remaining lease period. This coincides with HDB Minimum Occupancy Period (MOP) of 5 years, after which a high number of new flats entering the resale market. The median resale price is relatively lower at this period as well, suspected to be due to this high supply.</li>
+										<li><b>90-70 remaining lease years:</b> Median resale price was in general inversely proportional to the transaction volume. Transaction volume was consistent with the availability of each flat type in the market, as seen by the overlap in the distribution between the number of flats available (orange) and the number of past transactions. For flats availability, as the remaining lease data for each unit was not available, it was estimated based on the year completion date of each HDB block obtained from the housing info dataset, hence how the distribution of the number of flats available was slightly shifted to the right as in general there is a slight gap between the year of HDB block completion and the year of lease start.</li>
+										<li><b>69-60 remaining lease years:</b> Observed depreciation in both transaction volume and median resale price starting at this range. However, depreciation was slower, suspected due to <a href="https://stackedhomes.com/editorial/old-hdb-flats-are-being-snapped-up-by-young-singaporeans-but-why/#gs.x4cv1x">some buyers’ preference for older and larger HDB flats</a></li>
+										<li><b>59 and lesser remaining lease years:</b> Steeper depreciation observed. Suspected to be due to lesser remaining lease as well as <a href="https://www.cpf.gov.sg/member/tnc/t-c-for-use-of-cpf-under-cpf-housing-scheme">lesser CPF withdrawal limit for older flats.</a></li>
+									</ol></p>
+									<span class="image fit"><img src="images/hdb-lease.png" alt="" /></span>
+
+									<h3>Factors Affecting Resale Price</h3>
+									<p>Based on decision tree model, after excluding correlated variables, the factors mostly affecting resale price are as follows, in descending order:</p>
+									<ol>
+										<li>Floor area</li>
+										<li>Flat type</li>
+										<li>Remaining lease</li>
+										<li>Floor level (low/middle/high)</li>
+										<li>Region</li>
+									</ol>
+									<p>From training the resale model using these variables, R2 result of ~73% was obtained for both training and testing data.</p>
+									<span class="image fit"><img src="images/hdb-tree.png" alt="" /></span>
+
+
+									<h2>Closing Remark</h2>
+									<p>Factors affecting HDB resale price and number of transactions have been studied and resale price prediction decision tree model has been created with 73% explainable variance. This explainable variance might have been due to other factors, which were not available in the dataset use. In addition, decision tree model was chosen due to its explainability. However, there might be other black-box model which can better predict the resale price and this could be the subject of future studies.</p>
+									<p><i>Project was done as part of requirement for NUS Master of Enterprise Business Analytics course Analytics Project Management - with modification</i></p>
+
+
+									<h2>Links</h2>
+									<ul>
+										<li><a href="https://github.com/elsayovita/hdb-resale">GitHub repository</a></li>
+										<li><a href="https://github.com/elsayovita/hdb-resale/blob/main/Data%20Cleaning.ipynb">Data cleaning script (Python)</a></li>
+										<li><a href="https://github.com/elsayovita/hdb-resale/blob/main/OneMap%20API%20extract.ipynb">OneMap API coordinate retrieval script (Python)</a></li>
+										<li><a href="https://public.tableau.com/app/profile/elsa6801/viz/HDBResaleTransactionAnalysisJan17-Feb23/HDBResaleFlatAnalysisJan17-Feb23">Tableau Dashboard</a></li>
+									</ul>
+									<h2>Dataset</h2>
+									<ul>
+										<li><a href="https://data.gov.sg/dataset/resale-flat-prices?view_id=093ff0f0-783f-4f6a-be52-7e506a8c58ca&resource_id=f1765b54-a209-4718-8d38-a39237f502b3">HDB Resale Transaction</a></li>
+										<li><a href="https://data.gov.sg/dataset/hdb-property-information">Existing HDB Properties</a></li>
+										<li><a href="https://va.ecitizen.gov.sg/CFP/CustomerPages/NEA_google/displayresult.aspx?MesId=1068932&Source=Google&url=va.ecitizen.gov.sg">Region data</a></li>
+										<li><a href="https://tablebuilder.singstat.gov.sg/table/CT/8322">Income by Town</a></li>
+										<li><a href="https://github.com/elsayovita/hdb-resale/tree/main/dataset">Cleaned dataset</a></li>
+									</ul>
+									<h2>Articles</h2>
+									<ul>
+										<li><a href="https://www.straitstimes.com/singapore/dpm-wong-confident-ramped-up-supply-cooling-measures-will-stabilise-property-market">DPM Wong confident ramped-up supply, cooling measures will stabilise property market</a></li>
+										<li><a href="https://www.channelnewsasia.com/singapore/hdb-condo-rents-rising-covid-19-construction-delays-recovery-singapore-3052211">Rise in housing rents due to COVID-19 construction delays, demand amid pandemic recovery: Desmond Lee</a></li>
+										<li><a href="https://stackedhomes.com/editorial/old-hdb-flats-are-being-snapped-up-by-young-singaporeans-but-why/#gs.x4cv1x">Old HDB Flats Are Being Snapped Up By Young Singaporeans, But Why?</a></li>
+										<li><a href="https://www.cpf.gov.sg/member/tnc/t-c-for-use-of-cpf-under-cpf-housing-scheme">Terms and conditions for use of CPF under the CPF Housing Scheme</a></li>
+										<li><a href="https://www.channelnewsasia.com/singapore/property-cooling-measures-absd-tdsr-ltv-loan-hdb-2382301">HDB Cooling Measures (2021)</a></li>
+										<li><a href="https://www.channelnewsasia.com/singapore/singapore-property-cooling-measures-loan-borrowing-criteria-hdb-ltv-limit-15-month-wait-out-period-2974776">HDB Cooling Measures (2022)</a></li>
+									</ul>
+									<ul class="actions fit">
+										<li><a href="#top" class="button primary fit">Back to Top</a></li>
+									</ul>
+
+									<hr />
+							</section>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section class="split contact">
+							<section class="alt">
+								<h3>Address</h3>
+								<p>Singapore</p>
+							</section>
+							<section>
+								<h3>Email</h3>
+								<p><a href="#">info@untitled.tld</a></p>
+							</section>
+							<section>
+								<h3>Social</h3>
+								<ul class="icons alt">
+									<li><a href="https://twitter.com/elsayovita51" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="https://sg.linkedin.com/in/elsa-yovita-070b55155" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									<li><a href="https://github.com/elsayovita" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+								</ul>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
