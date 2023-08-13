@@ -2587,6 +2587,13 @@ input, select, textarea {
 		}
 
 /* Image */
+	.avatar {
+		vertical-align: middle;
+		display:inline-block;
+		overflow: hidden;
+		width: 30px;
+		border-radius: 50%;
+  	}
 
 	.image {
 		border: 0;
