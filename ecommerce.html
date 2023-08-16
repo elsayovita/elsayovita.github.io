@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>E-Commerce Website Analysis | Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">HOME</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">HOME</a></li>
+							<li><a href="about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://sg.linkedin.com/in/elsa-yovita-070b55155" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://github.com/elsayovita" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<h1>E-Commerce Website Analysis</h1>
+									<p>Understanding factors affecting e-commerce website's customer churn.</p>
+								</header>
+								<span class="image fit"><img src="images/Ecommerce.jpeg" alt="" /></span>
+
+								<!-- Text stuff -->
+									<h2>Background</h2>
+
+									<p>In the E-commerce industry, customer data is a crucial success factor. One field in which this can help is understanding customer churn. Churn, which is the rate at which customers discontinue their engagement with an e-commerce business, has a significant impact on overall company health. High churn rates can lead to revenue loss, reduced customer loyalty, and increased marketing costs to acquire new customers. By analyzing factors affecting churn, an e-commerce company gains valuable insights into customer behaviour and preferences. This understanding allows the business to tailor its marketing strategies, improve customer experience, and develop targeted retention initiatives, and ultimately build lasting relationships, fostering a more sustainable and thriving online enterprise. For this project, we used an e-commerce customer data to understand the factors affecting churn and to build a prediction model to help the company flag customers that is more likely to churn.</p>
+
+
+									<h2>Data</h2>
+									<p>Data was retrieved from <a href="https://www.kaggle.com/datasets/ankitverma2010/ecommerce-customer-churn-analysis">Kaggle</a>, ccontaining customer data with known variables shown below. Data cleaning was done and both the complete script and cleaned data can be found on <a href="https://github.com/elsayovita/ecommerce">my GitHub repository.</a></p>
+									<span class="image fit"><img src="images/ecommerce-dict.png" alt="" /></span>
+
+
+
+									<h2>Methodology</h2>
+									<h3>Data Cleaning</h3>
+									<p>Below is the list of preprocessing steps done before the model-building stage:</p>
+
+									<h4>Duplicate Entry</h4>
+									<p>There are different customers with duplicated features. However, considering the business domain this duplication is possible to happen by chance and not due to data input issues. In addition, target data is consistent for each duplicate, so the duplicate was left as is.</p>
+									<span class="image fit"><img src="images/ecommerce-duplicate.png" alt="" /></span>
+
+									<h4>Data Consistency</h4>
+									<p>Both numerical and categorical data were checked for consistency and assuming the context of the data being customer data of e-commerce platform a few issues were found from categorical data where the same categories were entered using different names:</p>
+									<ol>
+										<li>PreferredLoginDevice: mobile phone recorded as both "Phone" and "Mobile Phone"</li>
+										<li>PreferredPaymentMode: credit card recorded as both "Credit Card" and "CC" & cash on delivery recorded as both "COD" and "Cash on Delivery"</li>
+										<li>PreferedOrderCat: mobile phone recorded as both "Mobile" and "Mobile Phone"</li>
+									</ol>
+									<p>To resolve this issue, entries were standardized into the same name as follows:</p>
+									<span class="image fit"><img src="images/ecommerce-consistency.png" alt="" /></span>
+
+									<h4>Missing Data</h4>
+									<p>Missing data was observed from columns stated below with percentage missing of ~5% for each column, therefore data was considered sufficient not to remove from the analysis. Considering the total missing rows from all the rows summed up to 33% of the whole dataset, imputation was done for the missing data. For this project, considering data distribution, simple imputation using median value was used.</p>
+									<span class="image fit"><img src="images/ecommerce-missing.png" alt="" /></span>
+
+
+									<h3>Data Exploration</h3>
+									<p>Data was split into train and test set at 80:20 ratio and findings are further elaborated below</p>
+
+									<h4>Outlier Data</h4>
+									<p>Checking the distribution of numerical data using the boxplot, some outliers were observed, and extreme outliers were removed from the training data set with the boxplot as a guide. In this case, outlier was observed for 'CashbackAmount', 'Tenure', 'WarehouseToHome', 'NumberofAddress', and 'DaySinceLastOrder'</p>
+									<span class="image fit"><img src="images/ecommerce-outlier.png" alt="" /></span>
+
+									<h4>Class Imbalance</h4>
+									<p>Checking on the distribution of target class (churn/no churn), there are significantly more no churn data than churn. This might cause the prediction model to skew towards predicting no churn. Therefore, oversampling was done to the churn data using SMOTE.</p>
+									<span class="image fit"><img src="images/ecommerce-imb.png" alt="" /></span>
+
+									<h4>Correlation to Churn</h4>
+									<p>Both numerical and categorical features were checked for correlation with churn and features found to be correlated to churn was used for modelling. Result is elaborated further in subsequent section.</p>
+
+
+									<h3>Churn Prediction Model</h3>
+									<p>Churn classification was trained using Random Forest, AdaBoost, Gradient Boosting, and XGBoost Classification model with 5-Fold cross validation using training data. Then hyperparameter was tuned for each of the model to improve the model performance. Finally, the score of the test data was calculated to approximate model performance in production environment and to choose the best model. F1 score was used as the metric to assess model performance, as a balance between precision and recall was needed in the business problem.</p>
+
+
+
+									<h2>Result</h2>
+									<h3>Factors Affecting Churn</h3>
+									<ol>
+										<li>PreferedOrderCat: for Mobile Phones, more churn was seen from both count/proportion relative to other categories.</li>
+										<li>MaritalStatus: Single customers have higher churn, despite married people being the main customer base.</li>
+										<li>Complain: Customers who complained are more likely to churn</li>
+										<li>PreferredPaymentMode: Customers paying using card (Debit/Credit) less likely to churn</li>
+										<li>Tenure: the customers who churned are concentrated at low tenure.</li>
+										<li>CashbackAmount: churn/no churn proportion increases as CashbackAmount decreases. However this observation does not hold for the small proportion of customers with CashbackAmount less than 100</li>
+										<li>DaySinceLastOrder: churn/no churn proportion increases as DaySinceLastOrder decreases.</li>
+									</ol>
+									<span class="image fit"><img src="images/ecommerce-corr.png" alt="" /></span>
+
+									<h3>Churn Prediction Model Performance</h3>
+									<p>Using the above 7 features, multiple models were trained (Random Forest, AdaBoost, Gradient Boosting, and XGBoost). Overall, based on the F1 score, Gradient Boosting model is the best model among the model tested with F1 score of 0.9655 from both train and test dataset.</p>
+									<span class="image fit"><img src="images/ecommerce-f1.png" alt="" /></span>
+									<p>Below are the importance of the features to churn in descending order</p>
+									<span class="image fit"><img src="images/ecommerce-impt.png" alt="" /></span>									
+
+
+									<h2>Closing Remark</h2>
+									<p>The eCommerce landscape is competitive and the cost of acquiring a new customer is more expensive than retaining a customer. In this project, data exploration and prediction models were developed to help identify a potential churn customer. Factors affecting churn were explored and it was concluded that the Gradient Boosting Classifier model can assist best out of tested models in this aspect. </p>
+
+
+									<h2>Links</h2>
+									<ul>
+										<li><a href="https://github.com/elsayovita/ecommerce">GitHub repository</a></li>
+										<li><a href="https://github.com/elsayovita/ecommerce/blob/main/e-commerce.ipynb">Data processing, EDA, and modelling script (Python)</a></li>
+										<li><a href="https://www.kaggle.com/datasets/ankitverma2010/ecommerce-customer-churn-analysis">Original dataset (Kaggle)</a></li>
+									</ul>
+									<ul class="actions fit">
+										<li><a href="#top" class="button primary fit">Back to Top</a></li>
+									</ul>
+
+									<hr />
+							</section>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section class="split contact">
+							<section class="alt">
+								<h3>Address</h3>
+								<p>Singapore</p>
+							</section>
+							<section>
+								<h3>Social</h3>
+								<ul class="icons alt">
+									<li><a href="https://sg.linkedin.com/in/elsa-yovita-070b55155" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									<li><a href="https://github.com/elsayovita" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+								</ul>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Elsa Yovita</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
