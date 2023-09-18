@@ -72,7 +72,7 @@
 									<p>Data was imported to Tableau for data analysis and visualization. Data was merged according to the following schema, where resale transaction and existing HDB information tables were merged by address column, while income, region, and resale transaction tables were merged by town column.</p>
 									<span class="image fit"><img src="images/hdb-oltp.png" alt="" /></span>
 
-									<h3>Resale Price Prediction</h3>
+									<h3>Understanding Factors Affecting Resale Price</h3>
 									<p>Decision tree model was used to model the resale price as we aim to understand the factors affecting resale price and the white-box nature of the model would help to achieve this goal. Model training was done in open-source Orange software.</p>
 									<span class="image fit"><img src="images/hdb-orange.png" alt="" /></span>
 
@@ -95,7 +95,7 @@
 									<span class="image fit"><img src="images/hdb-lease.png" alt="" /></span>
 
 									<h3>Factors Affecting Resale Price</h3>
-									<p>Based on decision tree model, after excluding correlated variables, the factors mostly affecting resale price are as follows, in descending order:</p>
+									<p>Decision tree model was built with R2 result of ~73% was obtained for both training and testing data, and model was considered as adequate as it can explain majority of variability in the price data. Based on decision tree model, after excluding correlated variables, the factors mostly affecting resale price are as follows, in descending order:</p>
 									<ol>
 										<li>Floor area</li>
 										<li>Flat type</li>
@@ -103,12 +103,10 @@
 										<li>Floor level (low/middle/high)</li>
 										<li>Region</li>
 									</ol>
-									<p>From training the resale model using these variables, R2 result of ~73% was obtained for both training and testing data.</p>
-									<span class="image fit"><img src="images/hdb-tree.png" alt="" /></span>
 
 
 									<h2>Closing Remark</h2>
-									<p>Factors affecting HDB resale price and number of transactions have been studied and resale price prediction decision tree model has been created with 73% explainable variance. This explainable variance might have been due to other factors, which were not available in the dataset use. In addition, decision tree model was chosen due to its explainability. However, there might be other black-box model which can better predict the resale price and this could be the subject of future studies.</p>
+									<p>Factors affecting HDB resale price and number of transactions have been studied through data visualization and decision tree model created. However, based on the model performance, there are other factors affecting resale price which were not available in the dataset used. In addition, decision tree model was chosen due to its explainability. However, in terms of building a model to predict resale price, there might be other black-box model which can give better prediction and this could be the subject of future studies.</p>
 									<p><i>Project was done as part of requirement for NUS Master of Enterprise Business Analytics course Analytics Project Management - with modification</i></p>
 
 
